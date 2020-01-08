@@ -11,8 +11,27 @@
 |
 */
 
+Auth::routes();
+
+/**
+ * Disable the registration route
+ */
+if(! config('auth.allow_registrations')) {
+    Route::any('/register', function () {
+        return redirect()->route('home');
+    });
+}
+
 Route::get('/', function () {
-    return view('home');
+    return view('home', ['term' => '', 'output' => []]);
 })->name('home');
 
-Auth::routes();
+Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', 'AdminController@home')->name('home');
+
+    Route::resource('users', 'UserController');
+
+    Route::resource('roles', 'RoleController');
+
+    Route::resource('permissions', 'PermissionController');
+});

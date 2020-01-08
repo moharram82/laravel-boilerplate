@@ -1,0 +1,296 @@
+/** ---------------------------------------------------
+  General styles
+ ----------------------------------------------------*/
+body {
+  color: #486581;
+  font-family: $font-family-sans-serif;
+  //background-color: #f7f9fc;
+  background-color: #F0F4F8;
+}
+a {
+  transition: color 200ms ease-in-out;
+}
+div.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+  perspective: 1500px;
+}
+table.data-table {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px 5px rgba(0,0,0,.1);
+}
+table.data-table tr {
+}
+table.data-table td,
+table.data-table th {
+  vertical-align: middle;
+  border: none !important;
+  padding-left: 20px;
+}
+table.data-table thead {
+  background: transparent !important;
+}
+table.data-table thead tr {
+  border-bottom: 2px solid $gray-200;
+}
+table.data-table thead tr th {
+  color: #486581;
+  background-color: $gray-200;
+  font-size: 14px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+table.data-table thead tr th:first-child {
+  border-top-left-radius: 10px;
+}
+table.data-table thead tr th:last-child {
+  border-top-right-radius: 10px;
+}
+table.data-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+table.data-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+table.data-table tbody tr:nth-child(even) {
+  background-color: $gray-100;
+}
+table.data-table tbody tr:hover {
+  background-color: #e5f7fc;
+}
+
+/** ---------------------------------------------------
+  Sidebar styles
+ ----------------------------------------------------*/
+div.sidebar {
+  color: #899AAC;
+  background-color: #102A43;
+  min-width: 250px;
+  max-width: 250px;
+  //border-right: 1px solid #E1E9EF;
+  transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
+  transform-origin: bottom left;
+}
+div.sidebar.active {
+  margin-left: -250px;
+  transform: rotateY(100deg);
+}
+div.sidebar-header {
+  text-align: center;
+  background-color: #2e425c;
+  height: 60px;
+  //border-right: 1px solid #2f455f !important;
+}
+div.sidebar-header h3 a {
+  color: white;
+  font-size: 18px;
+  text-decoration: none;
+  line-height: 60px;
+}
+div.sidebar-nav {
+  margin: 50px 0 0 0;
+  padding: 0;
+}
+div.nav-section {
+  margin: 0 0 50px 0;
+  padding: 0;
+}
+div.nav-section h5 {
+  color: #627D98;
+  font-size: 14px;
+  font-weight: 400;
+  font-variant: small-caps;
+  margin: 0;
+  padding: 0 30px;
+}
+div.nav-section ul {
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+div.nav-section ul li {
+  margin: 0;
+  padding: 0;
+}
+div.nav-section ul li a {
+  color: #829AB1;
+  display: block;
+  margin: 0;
+  padding: 7px 30px;
+}
+div.nav-section ul li a:hover {
+  color: white;
+  text-decoration: none;
+}
+div.nav-section ul li a i {
+  color: #829AB1;
+  margin: 0 20px 0 0;
+  padding: 0;
+  transition: color 200ms ease-in-out;
+}
+div.nav-section ul li a:hover i {
+  color: white;
+}
+div.nav-section ul li.active > a {
+  color: white;
+  background-color: #2CB1BC;
+  padding: 10px 30px 10px 26px;
+  border-left: 4px solid white;
+}
+div.nav-section ul li.active > a i {
+  color: white;
+}
+div.nav-section ul li.active > a, a[aria-expanded="true"] {
+  //background: #2f455f;
+}
+div.nav-section ul li > a[data-toggle="collapse"] {
+  position: relative;
+}
+div.nav-section ul li > a.dropdown-toggle::after {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+div.nav-section ul ul {
+  background: #243B53;
+  padding: 5px 0 10px 0;
+}
+div.nav-section ul ul li {
+  margin-left: 33px;
+}
+div.nav-section ul ul a {
+  font-size: 14px !important;
+  padding: 5px 40px !important;
+}
+
+/** ---------------------------------------------------
+  contents styles
+ ----------------------------------------------------*/
+nav.main-nav {
+  color: white !important;
+  background-color: #334E68;
+}
+nav.main-nav div.navbar-collapse > ul > li > a {
+  color: white !important;
+}
+ul.navbar-nav li a img.profile-pic {
+  width: 28px;
+  height: 28px;
+  margin-right: 5px;
+  border-radius: 25px;
+}
+div.contents {
+  color: #486581;
+  width: 100%;
+  min-height: 100vh;
+  transition: all 0.3s;
+}
+div.content-wrapper {
+  padding: 30px;
+}
+#sidebarCollapse {
+  width: 40px;
+  height: 40px;
+  margin: 0 0 0 7px;
+  background: transparent;
+  cursor: pointer;
+}
+#sidebarCollapse span {
+  width: 80%;
+  height: 2px;
+  margin: 0 auto;
+  display: block;
+  background: #9FB3C8;
+  //background: #555;
+  transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+  transition-delay: 0.2s;
+}
+#sidebarCollapse span:first-of-type {
+  transform: rotate(45deg) translate(2px, 2px);
+}
+#sidebarCollapse span:nth-of-type(2) {
+  opacity: 0;
+}
+#sidebarCollapse span:last-of-type {
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+#sidebarCollapse.active span {
+  transform: none;
+  opacity: 1;
+  margin: 5px auto;
+}
+button.navbar-btn {
+  box-shadow: none;
+  outline: none !important;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  div.sidebar {
+    margin-left: -250px;
+    transform: rotateY(90deg);
+  }
+  div.sidebar.active {
+    margin-left: 0;
+    transform: none;
+  }
+  #sidebarCollapse span:first-of-type,
+  #sidebarCollapse span:nth-of-type(2),
+  #sidebarCollapse span:last-of-type {
+    transform: none;
+    opacity: 1;
+    margin: 5px auto;
+  }
+  #sidebarCollapse.active span {
+    margin: 0 auto;
+  }
+  #sidebarCollapse.active span:first-of-type {
+    transform: rotate(45deg) translate(2px, 2px);
+  }
+  #sidebarCollapse.active span:nth-of-type(2) {
+    opacity: 0;
+  }
+  #sidebarCollapse.active span:last-of-type {
+    transform: rotate(-45deg) translate(1px, -1px);
+  }
+}
+
+/** ---------------------------------------------------
+  Footer styles
+ ----------------------------------------------------*/
+div.admin-footer {
+  font-size: 13px;
+  line-height: 40px;
+  background-color: white;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #E1E9EF !important;
+}
+
+
+@media (max-width: 576px) {
+
+}
+
+@media (min-width: 576px) {
+
+}
+
+@media (min-width: 768px) {
+
+}
+
+@media (min-width: 992px) {
+
+}
+
+@media (min-width: 1200px) {
+
+}

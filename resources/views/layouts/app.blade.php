@@ -1,24 +1,60 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>@yield('title')</title>
+    <meta name="description" content="@yield('description')">
+    <meta name="keywords" content="@yield('keywords')">
+    <meta name="robots" content="index, follow">
+    <meta name="revisit-after" content="7 days">
+    <meta name="generator" content="PHPStorm 2018.2.5">
+    <meta name="author" content="Mohammed A. Moharram">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <!-- Google+ tags -->
+    <meta itemscope itemtype="@yield('gp_type')">
+    <meta itemprop="headline" content="@yield('title')">
+    <meta itemprop="description" content="@yield('description')">
+    <meta itemprop="image" content="@yield('gp_image_url', '')">
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- Twitter tags -->
+    <meta name="twitter:card" content="@yield('tw_card_type')">
+    <meta name="twitter:site" content="">
+    <meta name="twitter:title" content="@yield('title')">
+    <meta name="twitter:description" content="@yield('description')">
+    <meta name="twitter:image" content="@yield('tw_image_url', '')">
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <!-- Facebook tags -->
+    <meta property="og:title" content="@yield('title')">
+    <meta property="og:site_name" content="">
+    <meta property="og:url" content="{{ url()->full() }}">
+    <meta property="og:description" content="@yield('description')">
+    <meta property="fb:app_id" content="">
+    <meta property="fb:admins" content="">
+    <meta property="og:type" content="@yield('og_type')">
+    <meta property="og:locale" content="ar_AR">
+    <meta property="og:image" content="@yield('og_image_url', '')">
+    <meta property="og:image:type" content="@yield('og_image_type', 'image/jpg')">
+    <meta property="og:image:width" content="@yield('og_image_width', 1200)">
+    <meta property="og:image:height" content="@yield('og_image_height', 630)">
 
-    <!-- Styles -->
+    @yield('tags')
+
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/png">
+    <!-- Place favicon.ico in the root directory -->
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @yield('styles')
+
 </head>
+
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -43,7 +79,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
-                            @if (Route::has('register'))
+                            @if (config('auth.allow_registrations'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
@@ -55,6 +91,16 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('admin.home') }}">
+                                        Dashboard
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('admin.users.index') }}">
+                                        Users
+                                    </a>
+
+                                    <div class="dropdown-divider"></div>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -76,5 +122,23 @@
             @yield('content')
         </main>
     </div>
+
+    <script src="{{ asset('js/app.js') }}"></script>
+
+    @yield('scripts')
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-XXXXX-X', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
 </body>
 </html>
