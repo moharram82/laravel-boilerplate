@@ -10,7 +10,31 @@ try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
 
+    // Bootstrap
     require('bootstrap');
+
+    // Moment
+    // window.moment = require('moment');
+
+    // Daterangepicker
+    // window.daterangepicker = require('daterangepicker/daterangepicker');
+
+    // Flatpickr
+    // window.flatpickr = require('flatpickr/dist/flatpickr');
+    // window.flatpickr_arabic = require('flatpickr/dist/l10n/ar').default.ar;
+
+    // Selectize
+    // window.selectize = require('selectize');
+
+    // Select2
+    // window.select2 = require('select2');
+    // window.select2_arabic = require('select2/dist/js/i18n/ar');
+
+    // Feather Icons
+    // window.feather = require('feather-icons');
+
+    // Chart.js
+    //window.Chart = require('chart.js');
 } catch (e) {}
 
 /**

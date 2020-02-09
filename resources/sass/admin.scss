@@ -13,5 +13,29 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Daterangepicker
+//@import "~daterangepicker/daterangepicker.css";
+
+// Flatpickr
+//@import "~flatpickr/dist/flatpickr.css";
+// Flatpickr themes, load only one
+//@import "~flatpickr/dist/themes/airbnb.css";
+//@import "~flatpickr/dist/themes/confetti.css";
+//@import "~flatpickr/dist/themes/dark.css";
+//@import "~flatpickr/dist/themes/light.css";
+//@import "~flatpickr/dist/themes/material_blue.css";
+//@import "~flatpickr/dist/themes/material_green.css";
+//@import "~flatpickr/dist/themes/material_orange.css";
+//@import "~flatpickr/dist/themes/material_red.css";
+
+// Selectize themes, choose only one
+//@import "~selectize/dist/css/selectize.css";
+//@import "~selectize/dist/css/selectize.default.css";
+//@import "~selectize/dist/css/selectize.bootstrap2.css";
+//@import "~selectize/dist/css/selectize.bootstrap3.css";
+
+// Select2
+//@import "~select2/dist/css/select2.css";
+
 // Custom styles
 @import "admin_styles";
