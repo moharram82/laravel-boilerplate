@@ -24,7 +24,7 @@
 
     @endforeach
     <br>
-    {{ Form::submit('Edit', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Update', array('class' => 'btn btn-primary')) }}
 
     {{ Form::close() }}
 
