@@ -105,8 +105,18 @@
                             @else
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        <img class="profile-pic" src="{{ asset('img/profiles/me.jpg') }}" alt="Picture">
-                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                        <div class="float-left mr-2">
+                                            @if(auth()->user()->profile_picture)
+                                                <img class="profile-pic" src="{{ asset('storage/profiles') }}/{{ Auth::user()->profile_picture }}" alt="Profile Picture">
+                                            @else
+                                                <img class="profile-pic" src="{{ asset('storage/profiles/default.jpg') }}" alt="Profile Picture">
+                                            @endif
+                                        </div>
+                                        <div class="float-left mr-2">
+                                            <span>{{ Auth::user()->name }}</span>
+                                            <span class="small text-muted d-block">{{ Auth::user()->roles[0]->name }}</span>
+                                        </div>
+                                        <span class="caret"></span>
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -138,7 +148,20 @@
                 </nav>
 
                 <div class="content-wrapper">
+
+                    @if(session()->has('flash_message'))
+                    <!-- session alerts -->
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="alert-heading">Success!</h4>
+                        <p>{{ session()->get('flash_message') }}</p>
+                    </div>
+                    @endif
+
                     @yield('content')
+
                 </div><!-- .content-wrapper -->
 
             </div><!-- .contents -->

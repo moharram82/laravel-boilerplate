@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-
-use App\User;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -18,39 +21,36 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
-        $users = User::all();
-
-        return view('admin.users.index')->with('users', $users);
+        return view('admin.users.index', ['users', User::all()]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
-        $roles = Role::get();
-        return view('admin.users.create', ['roles'=>$roles]);
+        return view('admin.users.create', ['roles' => Role::all()]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws ValidationException
      */
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'=>'required|max:120',
+            'name'=>'required|max:128',
             'email'=>'required|email|unique:users',
-            'password'=>'required|min:6|confirmed'
+            'password'=>'required|min:6|confirmed',
         ]);
 
         $user = User::create([
@@ -59,44 +59,38 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $roles = $request['roles'];
+        $selected_roles = $request['roles'];
 
-        if (isset($roles)) {
-
-            foreach ($roles as $role) {
-            $role_r = Role::where('id', '=', $role)->firstOrFail();
-            $user->assignRole($role_r);
+        if ($selected_roles) {
+            foreach ($selected_roles as $selected_role) {
+                $user->assignRole($selected_role);
             }
         }
 
         return redirect()->route('admin.users.index')
-            ->with('flash_message',
-             'User successfully added.');
+            ->with('flash_message', 'User ' . $user->name . ' added successfully!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return View
      */
-    public function show($id)
+    public function show(User $user)
     {
-        $user = User::find($id);
-
         return view('admin.users.show', ['user' => $user]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return View
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = User::findOrFail($id);
-        $roles = Role::get();
+        $roles = Role::all();
 
         return view('admin.users.edit', compact('user', 'roles'));
     }
@@ -104,53 +98,50 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @param Request $request
+     * @param User $user
+     * @return RedirectResponse
+     * @throws ValidationException
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        $user = User::findOrFail($id);
-        $this->validate($request, [
-            'name'=>'required|max:120',
-            'email'=>'required|email|unique:users,email,'.$id,
-            'password'=>'required|min:6|confirmed'
-        ]);
-
-        $input = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+        $required_fields = [
+            'name'=>'required|max:128',
+            'email'=>'required|email|unique:users,email,'.$user->id,
         ];
 
-        $roles = $request['roles'];
-        $user->fill($input)->save();
-
-        if (isset($roles)) {
-            $user->roles()->sync($roles);
+        if($request->filled('password')) {
+            $required_fields['password'] ='min:6|confirmed';
         }
-        else {
+
+        $validated_fields = $this->validate($request, $required_fields);
+
+        $selected_roles = $request['roles'];
+
+        $user->fill($validated_fields)->save();
+
+        if ($selected_roles) {
+            $user->roles()->sync($selected_roles);
+        } else {
             $user->roles()->detach();
         }
+
         return redirect()->route('admin.users.index')
-            ->with('flash_message',
-             'User successfully edited.');
+            ->with('flash_message', 'User ' . $user->name . ' was updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return RedirectResponse
+     * @throws Exception
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $user = User::findOrFail($id);
         $user->delete();
 
         return redirect()->route('admin.users.index')
-            ->with('flash_message',
-             'User successfully deleted.');
+            ->with('flash_message', 'User ' . $user->name . ' was deleted successfully!');
     }
 }

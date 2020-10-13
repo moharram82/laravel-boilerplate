@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('title', 'Users')
+@section('title', 'Users - Admin Panel')
 
 @section('content')
 
-    <h1 class="float-left"><i class="fas fa-users mr-3"></i>Users</h1>
+    <h1 class="float-left"><i class="fas fa-users fa-fw mr-3"></i>Users</h1>
 
-    <a href="{{ route('admin.users.create') }}" class="btn btn-primary float-right">New User</a>
+    <a href="{{ route('admin.users.create') }}" class="btn btn-primary float-right">Add User</a>
 
     <div class="clearfix"></div>
 
@@ -18,8 +18,8 @@
             <tr>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Created On</th>
-                <th>Roles</th>
+                <th>Date/Time Added</th>
+                <th>User Roles</th>
                 <th>Operations</th>
             </tr>
         </thead>

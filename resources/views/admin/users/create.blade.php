@@ -1,47 +1,50 @@
 @extends('layouts.admin')
 
-@section('title', 'Add New User - Admin Panel')
+@section('title', 'New User')
 
 @section('content')
 
-    <h1>Add User</h1>
-    <hr>
+    <h1><i class="fas fa-users mr-3"></i>New User</h1>
+
+    <hr class="mb-5">
 
     @include ('partials.errors.list')
 
-    {{ Form::open(array('url' => 'admin/users')) }}
+    {{ Form::open(['route' => 'admin.users.store']) }}
 
     <div class="form-group">
         {{ Form::label('name', 'Name') }}
-        {{ Form::text('name', '', array('class' => 'form-control')) }}
+        {{ Form::text('name', '', ['class' => 'form-control']) }}
     </div>
 
     <div class="form-group">
         {{ Form::label('email', 'Email') }}
-        {{ Form::email('email', '', array('class' => 'form-control')) }}
+        {{ Form::email('email', '', ['class' => 'form-control']) }}
     </div>
 
-    <div class='form-group'>
-        @foreach ($roles as $role)
-            {{ Form::checkbox('roles[]',  $role->id ) }}
-            {{ Form::label($role->name, ucfirst($role->name)) }}<br>
+    <div class='form-group mt-4 mb-4'>
 
+        <h5>Assign Roles</h5>
+
+        @foreach ($roles as $role)
+            {{ Form::checkbox('roles[]',  $role->id, null, ['id'=> 'role-' . $role->id]) }}
+            {{ Form::label('role-' . $role->id, ucfirst($role->name)) }}<br>
         @endforeach
     </div>
 
     <div class="form-group">
         {{ Form::label('password', 'Password') }}<br>
-        {{ Form::password('password', array('class' => 'form-control')) }}
+        {{ Form::password('password', ['class' => 'form-control']) }}
 
     </div>
 
     <div class="form-group">
-        {{ Form::label('password', 'Confirm Password') }}<br>
-        {{ Form::password('password_confirmation', array('class' => 'form-control')) }}
+        {{ Form::label('password_confirmation', 'Confirm Password') }}<br>
+        {{ Form::password('password_confirmation', ['class' => 'form-control']) }}
 
     </div>
 
-    {{ Form::submit('Add', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Save User', ['class' => 'btn btn-primary btn-block btn-lg mt-5']) }}
 
     {{ Form::close() }}
 

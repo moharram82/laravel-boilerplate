@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -40,6 +40,6 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return ($this->roles->first()->name === 'Admin') ? true : false;
+        return $this->roles->first()->name === 'Admin';
     }
 }

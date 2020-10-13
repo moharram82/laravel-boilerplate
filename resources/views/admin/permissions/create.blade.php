@@ -1,36 +1,34 @@
 @extends('layouts.admin')
 
-@section('title', 'Add New Permission - Admin Panel')
+@section('title', 'New Permission')
 
 @section('content')
 
     @include ('partials.errors.list')
 
-    <h1><i class='fa fa-key'></i> Add Permission</h1>
-    <br>
+    <h1><i class='fa fa-key mr-3'></i>New Permission</h1>
 
-    {{ Form::open(array('url' => 'admin/permissions')) }}
+    <hr class="mb-5">
+
+    {{ Form::open(['route' => ['admin.permissions.store']]) }}
 
     <div class="form-group">
         {{ Form::label('name', 'Name') }}
-        {{ Form::text('name', '', array('class' => 'form-control')) }}
+        {{ Form::text('name', '', ['class' => 'form-control']) }}
     </div>
-    <br>
 
-    @if(!$roles->isEmpty())
+    @if(! $roles->isEmpty())
 
-        <h4>Assign Permission to Roles</h4>
+        <h5 class="mt-4">Assign Permission to Roles</h5>
 
         @foreach ($roles as $role)
-            {{ Form::checkbox('roles[]',  $role->id ) }}
-            {{ Form::label($role->name, ucfirst($role->name)) }}<br>
-
+            {{ Form::checkbox('roles[]',  $role->id, null, ['id'=> 'role-' . $role->id]) }}
+            {{ Form::label('role-' . $role->id, ucfirst($role->name)) }}<br>
         @endforeach
 
     @endif
 
-    <br>
-    {{ Form::submit('Add', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Save Permission', ['class' => 'btn btn-primary btn-block btn-lg mt-5']) }}
 
     {{ Form::close() }}
 
