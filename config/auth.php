@@ -114,4 +114,15 @@ return [
 
     'password_timeout' => 10800,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Registrations
+    |--------------------------------------------------------------------------
+    |
+    | Turn registrations for new users on and off.
+    |
+    */
+
+    'allow_registrations' => true,
+
 ];

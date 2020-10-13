@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -14,7 +14,7 @@ class PermissionController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'isAdmin']);
+        $this->middleware(['auth', 'admin']);
     }
 
     /**
@@ -24,7 +24,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return view('admin.permissions.index', ['permissions', Permission::all()]);
+        return view('admin.permissions.index', ['permissions' => Permission::all()]);
     }
 
     /**

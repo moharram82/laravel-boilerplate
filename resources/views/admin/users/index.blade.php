@@ -16,6 +16,7 @@
 
         <thead>
             <tr>
+                <th></th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Created On</th>
@@ -27,6 +28,13 @@
         <tbody>
         @foreach ($users as $user)
             <tr>
+                <td style="width: 45px;">
+                    @if($user->profile_picture && Storage::exists('public/profiles/' . $user->profile_picture))
+                    <img class="rounded-circle" src="{{ asset('storage/profiles/' . $user->profile_picture) }}" alt="Profile Picture" style="width: 40px;">
+                    @else
+                    <img class="rounded-circle" src="{{ asset('storage/profiles/default.jpg') }}" alt="Profile Picture" style="width: 40px;">
+                    @endif
+                </td>
                 <td><a href="{{ route('admin.users.show', $user->id) }}">{{ $user->name }}</a></td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->created_at->format('F d, Y h:ia') }}</td>

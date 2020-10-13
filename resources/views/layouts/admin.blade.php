@@ -57,9 +57,9 @@
                     <div class="nav-section">
                         <h5 class="nav-section-title mb-2">System</h5>
                         <ul>
-                            <li class="{{ (Route::is('admin.users.index')) ? 'active' : '' }}"><a href="{{ route('admin.users.index') }}"><i class="fas fa-users fa-fw"></i>Users</a></li>
-                            <li class="{{ (Route::is('admin.roles.index')) ? 'active' : '' }}"><a href="{{ route('admin.roles.index') }}"><i class="fas fa-theater-masks fa-fw"></i>Roles</a></li>
-                            <li class="{{ (Route::is('admin.permissions.index')) ? 'active' : '' }}"><a href="{{ route('admin.permissions.index') }}"><i class="fas fa-key fa-fw"></i>Permissions</a></li>
+                            <li class="{{ (Route::is('admin.users.*')) ? 'active' : '' }}"><a href="{{ route('admin.users.index') }}"><i class="fas fa-users fa-fw"></i>Users</a></li>
+                            <li class="{{ (Route::is('admin.roles.*')) ? 'active' : '' }}"><a href="{{ route('admin.roles.index') }}"><i class="fas fa-theater-masks fa-fw"></i>Roles</a></li>
+                            <li class="{{ (Route::is('admin.permissions.*')) ? 'active' : '' }}"><a href="{{ route('admin.permissions.index') }}"><i class="fas fa-key fa-fw"></i>Permissions</a></li>
                         </ul>
                     </div><!-- .nav-section -->
 
@@ -114,7 +114,11 @@
                                         </div>
                                         <div class="float-left mr-2">
                                             <span>{{ Auth::user()->name }}</span>
+                                            @if(auth()->user()->roles->count() >= 1)
                                             <span class="small text-muted d-block">{{ Auth::user()->roles[0]->name }}</span>
+                                            @else
+                                            <span class="small text-muted d-block">No role</span>
+                                            @endif
                                         </div>
                                         <span class="caret"></span>
                                     </a>
@@ -149,17 +153,30 @@
 
                 <div class="content-wrapper">
 
-                    @if(session()->has('flash_message'))
                     <!-- session alerts -->
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @if(session()->has('flash_message'))
+                    <div class="alert @if(session()->has('flash_message_type')) alert-{{ session()->get('flash_message_type') }} @else alert-success @endif alert-dismissible fade show" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
+                        @if(session()->has('flash_message_type'))
+                            @if(session()->get('flash_message_type') == 'success')
+                            <h4 class="alert-heading">Success!</h4>
+                            @elseif(session()->get('flash_message_type') == 'danger')
+                            <h4 class="alert-heading">Error!</h4>
+                            @elseif(session()->get('flash_message_type') == 'warning')
+                            <h4 class="alert-heading">Warning!</h4>
+                            @elseif(session()->get('flash_message_type') == 'info')
+                            <h4 class="alert-heading">Attention!</h4>
+                            @endif
+                        @else
                         <h4 class="alert-heading">Success!</h4>
+                        @endif
                         <p>{{ session()->get('flash_message') }}</p>
                     </div>
                     @endif
 
+                    <!-- main content -->
                     @yield('content')
 
                 </div><!-- .content-wrapper -->

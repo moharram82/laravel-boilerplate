@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,22 +13,11 @@
 |
 */
 
-Auth::routes();
-
-/**
- * Disable the registration route
- */
-if(! config('auth.allow_registrations')) {
-    Route::any('/register', function () {
-        return redirect()->route('home');
-    });
-}
-
 Route::get('/', function () {
-    return view('home', ['term' => '', 'output' => []]);
+    return view('home');
 })->name('home');
 
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->namespace('App\Http\Controllers')->group(function () {
     Route::get('/', 'AdminController@home')->name('home');
 
     Route::resource('users', 'UserController');

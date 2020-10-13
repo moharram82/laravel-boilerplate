@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
     {
         $users = [
             ['id' => 1, 'name' => 'Mohammed Moharram', 'email' => 'moharram82@hotmail.com', 'password' => Hash::make('12345678'), 'profile_picture' => null], // Admin
-            ['id' => 2, 'name' => 'Osman Moharram', 'email' => 'osman@hotmail.com', 'password' => Hash::make('12345678'), 'profile_picture' => null], // Author
+            ['id' => 2, 'name' => 'John Doe', 'email' => 'john@hotmail.com', 'password' => Hash::make('12345678'), 'profile_picture' => null], // Normal
         ];
 
         foreach ($users as $user) {

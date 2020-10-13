@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Verify')
+@section('title', 'Email Verification')
+@section('description', '')
+@section('keywords', '')
 
 @section('content')
 <div class="container">
@@ -17,7 +19,11 @@
                     @endif
 
                     {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
+                    {{ __('If you did not receive the email') }},
+                    <form class="d-inline" method="POST" action="{{ route('verification.send') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
+                    </form>
                 </div>
             </div>
         </div>

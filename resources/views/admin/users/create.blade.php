@@ -10,7 +10,7 @@
 
     @include ('partials.errors.list')
 
-    {{ Form::open(['route' => 'admin.users.store']) }}
+    {{ Form::open(['route' => 'admin.users.store', 'files' => true]) }}
 
     <div class="form-group">
         {{ Form::label('name', 'Name') }}
@@ -35,13 +35,16 @@
     <div class="form-group">
         {{ Form::label('password', 'Password') }}<br>
         {{ Form::password('password', ['class' => 'form-control']) }}
-
     </div>
 
     <div class="form-group">
         {{ Form::label('password_confirmation', 'Confirm Password') }}<br>
         {{ Form::password('password_confirmation', ['class' => 'form-control']) }}
+    </div>
 
+    <div class="form-group">
+        {{ Form::label('profile_picture', 'Profile Picture') }}
+        {{ Form::file('profile_picture', ['class' => 'form-control']) }}
     </div>
 
     {{ Form::submit('Save User', ['class' => 'btn btn-primary btn-block btn-lg mt-5']) }}
